@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { IncomingHttpHeaders } from "http";
 import { NextResponse } from "next/server";
 import { EventTypeApi } from "svix/dist/openapi";
+import { prisma } from "@/lib/prisma";
 
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || "";
 
@@ -40,11 +41,28 @@ async function handler(req: Request, res: Response) {
   if(eventType==='user.created' ||eventType==='user.updated'){
     const {id, ...attributes}=event.data
 
-    console.log({id, attributes, },eventType, "api endpoint")
+
     // now we add it to db
+    // upsert fn will either create or update the user base on clerk user id
+     const user=await prisma.user.upsert({
+      where:{
+        clerk_user_id:id as string
+      },
+      // create user in case it doesnt exist
+      create:{
+        clerk_user_id:id as string,
+        attributes
+      },
+      // update user if it exist
+      update:{
+        attributes
+      }
+    })
+    
+    console.log({user})
+  
+  
   }
-
-
 }
 
 type EventType = "user.created" | "user.updated" | "*"

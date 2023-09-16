@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 
 export default async function  Home() {
@@ -7,6 +8,7 @@ export default async function  Home() {
     <>
     <div>
       Hello 
+      <UserButton afterSignOutUrl='/sign-in'/>
     </div>
     </>
   )
