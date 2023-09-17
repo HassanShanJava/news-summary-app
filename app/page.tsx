@@ -1,15 +1,12 @@
-import { prisma } from '@/lib/prisma'
-import { UserButton } from '@clerk/nextjs'
-import Image from 'next/image'
+import HomePage from '@/components/home'
 
-export default async function  Home() {
+export default async function index() {
   // const data=await prisma.adminUser.findFirst()
   return (
     <>
-    <div>
-      Hello 
-      <UserButton afterSignOutUrl='/sign-in'/>
-    </div>
+      <div className='w-full h-screen'>
+        <HomePage />
+      </div>
     </>
   )
 }
