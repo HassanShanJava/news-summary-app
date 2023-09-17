@@ -7,7 +7,7 @@ export async function fetchNewsApi(category = "general" as string) {
         throw new Error("New Api Failed");
     }
 
-    return response.json();
+    return response;
 }
 
 
