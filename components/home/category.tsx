@@ -1,7 +1,7 @@
 "use client";
 import { fetchNewsApi } from "@/utils/helper";
 import React, { useEffect, useState } from "react";
-
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { categoryList } from "@/utils/constants";
 
 
@@ -14,11 +14,16 @@ const Category = () => {
   useEffect(() => {
     (async () => {
       const res = await fetchNewsApi(category);
-      const result=await res.json()
-      setNews(result.sources)
+      setNews(res.articles)
     })();
   }, [category]);
   console.log(news)
+
+  // const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<any[]>({
+  //   queryKey: ['newsList'],
+  //   queryFn: fetchNewsApi,
+  //   getNextPageParam: (_, pages) => pages.length + 1,
+  // });
 
   return (
     <div className="w-full px-8 sm:px-16 py-2 sm:py-4">
@@ -33,6 +38,9 @@ const Category = () => {
             {item.title}
           </div>
         ))}
+      </div>
+      <div>
+
       </div>
     </div>
   );

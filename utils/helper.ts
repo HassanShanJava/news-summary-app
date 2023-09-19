@@ -1,14 +1,8 @@
 export async function fetchNewsApi(category = "general" as string, pageParam = 1 as number) {
     // api used with infinite scroll
-    const response = await fetch(
+    return await fetch(
         `https://newsapi.org/v2/top-headlines?category=${category}&pageSize=10&page=${pageParam}&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`
-    );
-
-    if (!response.ok) {
-        throw new Error("New Api Failed");
-    }
-
-    return response;
+    ).then((res) => res.json());
 }
 
 

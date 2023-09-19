@@ -1,12 +1,11 @@
+
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ClerkProvider } from '@clerk/nextjs'
 
 
 const inter = Inter({ subsets: ['latin'] })
-const queryClient = new QueryClient()
 
 export const metadata: Metadata = {
   title: 'AI New Summarizer',
@@ -21,12 +20,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
 
-      <QueryClientProvider client={queryClient}>
         <html lang="en">
           <body className={inter.className}>{children}</body>
         </html>
-      </QueryClientProvider>
-      
+
     </ClerkProvider>
   )
 }
