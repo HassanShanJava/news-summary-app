@@ -3,6 +3,7 @@ import { fetchNewsApi } from "@/utils/helper";
 import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { categoryList } from "@/utils/constants";
+import NewsItem from "../ui/newsItem";
 
 
 
@@ -17,7 +18,7 @@ const Category = () => {
       setNews(res.articles)
     })();
   }, [category]);
-  console.log(news)
+  console.log({news})
 
   // const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<any[]>({
   //   queryKey: ['newsList'],
@@ -39,9 +40,9 @@ const Category = () => {
           </div>
         ))}
       </div>
-      <div>
-
-      </div>
+      {news && <div className='w-full my-2'>
+        <NewsItem data={news[1]} />
+      </div>}
     </div>
   );
 };
