@@ -1,6 +1,7 @@
-export async function fetchNewsApi(category = "general" as string) {
+export async function fetchNewsApi(category = "general" as string, pageParam = 1 as number) {
+    // api used with infinite scroll
     const response = await fetch(
-        `https://newsapi.org/v2/top-headlines/sources?apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}&sources=bbc-news&category=${category}`
+        `https://newsapi.org/v2/top-headlines?category=${category}&pageSize=10&page=${pageParam}&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`
     );
 
     if (!response.ok) {
@@ -11,14 +12,14 @@ export async function fetchNewsApi(category = "general" as string) {
 }
 
 
-export const draggableClick = (className:string) => {
+export const draggableClick = (className: string) => {
     const slider: any = document.querySelector(`.${className}`);
     console.log("working", slider)
     let isDown = false;
-    let startX:any;
-    let scrollLeft:any;
+    let startX: any;
+    let scrollLeft: any;
 
-    slider.addEventListener("mousedown", (e:any) => {
+    slider.addEventListener("mousedown", (e: any) => {
         isDown = true;
         slider.classList.add("active");
         startX = e.pageX - slider.offsetLeft;
@@ -32,7 +33,7 @@ export const draggableClick = (className:string) => {
         isDown = false;
         slider.classList.remove("active");
     });
-    slider.addEventListener("mousemove", (e:any) => {
+    slider.addEventListener("mousemove", (e: any) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;

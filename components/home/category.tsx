@@ -2,56 +2,11 @@
 import { fetchNewsApi } from "@/utils/helper";
 import React, { useEffect, useState } from "react";
 
-const categoryList = [
-  {
-    title: "Home",
-    type: "general",
-  },
-  {
-    title: "World",
-    type: "world",
-  },
-  {
-    title: "Politics",
-    type: "politics",
-  },
-  {
-    title: "Business",
-    type: "business",
-  },
-  {
-    title: "Technology",
-    type: "world",
-  },
-  {
-    title: "Heath",
-    type: "health",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-  {
-    title: "Sports",
-    type: "sports",
-  },
-];
+import { categoryList } from "@/utils/constants";
+
+
+
+
 const Category = () => {
   const [category, setCategory] = useState<string>("general");
   const [news, setNews] = useState([]);
@@ -66,7 +21,7 @@ const Category = () => {
   console.log(news)
 
   return (
-    <div className="w-full px-8 sm:px-16 ">
+    <div className="w-full px-8 sm:px-16 py-2 sm:py-4">
       <div className="w-full flex flex-wrap gap-2 sm:justify-between items-center">
         {categoryList.map((item, i) => (
           <div

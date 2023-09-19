@@ -4,7 +4,7 @@ import Category from '@/components/home/category'
 
 const HomePage = () => {
   return (
-    <div>
+    <div className='w-full max-w-[1500px] mx-auto '>
         <Navbar/>
         <Category/>
     </div>
