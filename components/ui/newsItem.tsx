@@ -1,19 +1,18 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import StaticImage from "../../public/assets/static-news-mage.png";
 import Link from "next/link";
 import { UserCircle2 } from "lucide-react";
-import { FaUserAlt } from "react-icons/fa"
-import { RiNewspaperLine } from "react-icons/ri"
+import { FaUserAlt } from "react-icons/fa";
+import { RiNewspaperLine } from "react-icons/ri";
 import { Button } from "./button";
-
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 import {
   Dialog,
@@ -22,13 +21,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-
-
+} from "@/components/ui/dialog";
+import SummaryModal from "../modal/summarize";
 
 const NewsItem = (props: any) => {
   console.log({ props }, "news item");
   const date = new Date(props?.data?.publishedAt);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -37,7 +37,13 @@ const NewsItem = (props: any) => {
           <div className="w-fit">
             {/* cant use nextjs image because it doesnt allow domain images until added in next config */}
             <img
-              src={props?.data?.urlToImage && props?.data?.urlToImage !== null && props?.data?.urlToImage !== '' ? props?.data?.urlToImage : StaticImage.src}
+              src={
+                props?.data?.urlToImage &&
+                props?.data?.urlToImage !== null &&
+                props?.data?.urlToImage !== ""
+                  ? props?.data?.urlToImage
+                  : StaticImage.src
+              }
               alt="/"
               className="object-cover h-16 w-24 sm:h-24 sm:w-32 rounded-md inset-0"
             />
@@ -55,33 +61,26 @@ const NewsItem = (props: any) => {
                 <FaUserAlt className="text-sm sm:text-lg rouned-full" />
               </div>
               <div className=" flex flex-col w-full max-w-[20rem]">
-                <p className="text-xs sm:text-sm w-full">{props?.data?.author && props?.data?.author !== null && props?.data?.author !== '' ? props?.data?.author : "Anonymous"}</p>
+                <p className="text-xs sm:text-sm w-full">
+                  {props?.data?.author &&
+                  props?.data?.author !== null &&
+                  props?.data?.author !== ""
+                    ? props?.data?.author
+                    : "Anonymous"}
+                </p>
                 <p className="text-xs sm:text-sm">{date.toDateString()}</p>
               </div>
 
-              <Dialog>
-                <DialogTrigger>
-                  <Button size={"sm"} className="bg-orange-600 font-semibold hover:bg-orange-500">
-                    <RiNewspaperLine className="text-md" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Summary</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete your account
-                      and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-
-
-
-
+              <Button
+                size={"sm"}
+                className="bg-orange-600 font-semibold hover:bg-orange-500"
+                onClick={() => setIsOpen(true)}
+              >
+                <RiNewspaperLine className="text-md" />
+              </Button>
             </div>
           </div>
-
+          <SummaryModal isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       ) : (
         ""

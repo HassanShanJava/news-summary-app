@@ -11,6 +11,14 @@
   background-position: 0 0, 22px 22px;
 }
 
+.scroll-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scroll-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
