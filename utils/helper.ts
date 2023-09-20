@@ -1,7 +1,12 @@
 export async function fetchNewsApi(category = "general" as string, pageParam = 1 as number) {
     // api used with infinite scroll
     return await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&pageSize=10&page=${pageParam}&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`
+        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&pageSize=10&page=${pageParam}&apiKey=${process.env.NEXT_PUBLIC_NEWS_API_KEY}`,{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors'
+        }
     ).then((res) => res.json());
 }
 
