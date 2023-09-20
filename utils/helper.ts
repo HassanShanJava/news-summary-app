@@ -5,6 +5,14 @@ export async function fetchNewsApi(category = "general" as string, pageParam = 1
     ).then((res) => res.json());
 }
 
+export async function fetchNewsSummarApi(requestOptions: any) {
+    // api used for new summary
+    return await fetch(
+        "https://api.openai.com/v1/engines/text-davinci-003/completions",
+        requestOptions
+    ).then((res) => res.json());
+}
+
 
 export const draggableClick = (className: string) => {
     const slider: any = document.querySelector(`.${className}`);

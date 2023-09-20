@@ -1,28 +1,13 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StaticImage from "../../public/assets/static-news-mage.png";
 import Link from "next/link";
 import { UserCircle2 } from "lucide-react";
 import { FaUserAlt } from "react-icons/fa";
 import { RiNewspaperLine } from "react-icons/ri";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import SummaryModal from "../modal/summarize";
+import SummaryModal from "@/components/modal/summarize";
 
 const NewsItem = (props: any) => {
   console.log({ props }, "news item");
@@ -30,10 +15,28 @@ const NewsItem = (props: any) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef?.current) return;
+
+    const observer = new IntersectionObserver(([entry]: any) => {
+      if (props?.isLast && entry.isIntersecting) {
+        if (props?.nextPage) props?.nextPage();
+        observer.unobserve(entry.target);
+      }
+    });
+
+    observer.observe(cardRef.current);
+  }, [props?.isLast]);
+
   return (
     <>
       {props?.data ? (
-        <div className="w-full flex justify-start gap-2 sm:gap-4  items-start  max-h-fit p-2 hover:bg-gray-100 rounded-lg">
+        <div
+          ref={cardRef}
+          className="w-full flex justify-start gap-2 sm:gap-4  items-start  max-h-fit p-2 hover:bg-gray-100 rounded-lg"
+        >
           <div className="w-fit">
             {/* cant use nextjs image because it doesnt allow domain images until added in next config */}
             <img
@@ -80,7 +83,12 @@ const NewsItem = (props: any) => {
               </Button>
             </div>
           </div>
-          <SummaryModal isOpen={isOpen} setIsOpen={setIsOpen} />
+          <SummaryModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            title={props?.data.title}
+            desc={props?.data.description}
+          />
         </div>
       ) : (
         ""
